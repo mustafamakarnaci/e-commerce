@@ -69,7 +69,7 @@ exports.update = (req, res) => {
         if (files.photo) {
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
-                    error: 'Image szie should be less than 1 MB'
+                    error: 'Image size should be less than 1 MB'
                 });
             }
 
@@ -137,7 +137,7 @@ exports.create = (req, res) => {
                     error: errorHandler(err)
                 })
             }
-            res.json({ result });
+            res.json(result);
         })
     })
 

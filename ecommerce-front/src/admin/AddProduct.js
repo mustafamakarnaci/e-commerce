@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
 import { Link, Redirect } from 'react-router-dom'
-import { createProduct } from './apiAdmin'
+import { createProduct, getCategories } from './apiAdmin'
 
 
 const AddProduct = () => {
@@ -39,13 +39,25 @@ const AddProduct = () => {
         createdProduct,
         redirectToProfile,
         formData
-    } = values
+    } = values;
+
+
+    // load categories and set formdata
+    const init = () => {
+        getCategories().then(data => {
+            if (data.error) {
+                setValues({ ...values, errro: data.error });
+            } else {
+                setValues({ ...values, categories: data, formData: new FormData() });
+            }
+        });
+    };
 
 
     useEffect(() => {
-        setValues({ ...values, formData: new FormData() })
-
+        init();
     }, []);
+
 
     const handleChange = name => event => {
         const value = name === 'photo' ? event.target.files[0] : event.target.value
@@ -107,16 +119,24 @@ const AddProduct = () => {
             <div className="form-group">
                 <label htmlFor="" className="text-muted">Category</label>
                 <select onChange={handleChange('category')} className="form-control" >
-                    <option value="608a08e398338042f417f265">fake</option>
-                    <option value="608a08e398338042f417f265">ruby</option>
+
+                    <option>Please select</option>
+                    {console.log(categories)}
+                    {categories && categories.length > 0 && categories.map((c, i) =>
+                        (<option key={i} value={c._id}>{c.name}</option>)
+                    )}
+
                 </select>
             </div>
 
             <div className="form-group">
                 <label htmlFor="" className="text-muted">Shipping</label>
                 <select onChange={handleChange('shipping')} className="form-control" >
+
+                    <option>Please select</option>
                     <option value="0">No</option>
                     <option value="1">Yes</option>
+
                 </select>
             </div>
 
@@ -133,12 +153,32 @@ const AddProduct = () => {
     {newPostForm()}
     {goBack()} */
 
+    const showError = () => (
+        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
+            {error}
+        </div>
+    )
+
+    const showSuccess = () => (
+        <div className="alert alert-info" style={{ display: createdProduct ? '' : 'none' }}>
+            <h2>{`${createdProduct}`} is created!</h2>
+        </div>
+    )
+
+    const showLoading = () => (
+        loading && (<div className="alert alert-success">
+            <h2>Loading...</h2>
+        </div>)
+    )
 
     return (
         <Layout title="Add a new product" description={`G-day ${user.name}, ready to add a new product`}>
 
             <div className="row">
                 <div className="col-md-8 offset-md-2">
+                    {showError()}
+                    {showSuccess()}
+                    {showLoading()}
                     {newPostForm()}
                 </div>
             </div>
