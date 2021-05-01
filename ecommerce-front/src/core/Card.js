@@ -6,9 +6,11 @@ const Card = ({ product }) => {
     return (
         <div className="col-4 mb-3">
             <div className="card">
+            
                 <div className="card-header">
                     {product.name}
                 </div>
+
                 <div className="card-body">
                     <ShowImage item={product} url="product" />
                     <p>{product.description}</p>

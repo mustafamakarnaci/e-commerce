@@ -4,6 +4,7 @@ import Card from './Card';
 import { getCategories } from './apiCore';
 import Checkbox from './Checkbox'
 import { prices } from './fixesPrices'
+import RadioBox from './RadioBox';
 
 const Shop = () => {
 
@@ -28,25 +29,63 @@ const Shop = () => {
     }, [])
 
     const handleFilters = (filters, filterBy) => {
-        
+
         const newFilters = { ...myFilters }
         newFilters.filters[filterBy] = filters
+
+        if (filterBy == "price") {
+            let priceValues = handlePrice(filters);
+            newFilters.filters[filterBy] = priceValues
+        }
+
+        loadFilteredResult(myFilters.filters);
         setMyFilters(newFilters)
     }
 
+    const handlePrice = value => {
+        const data = prices;
+        let array = []
+        for (let key in data) {
+            if (data[key]._id === parseInt(value)) {
+                array = data[key].array
+            }
+        }
+        return array;
+    }
+
+    const loadFilteredResult = (newFilters) => {
+        console.log(newFilters);
+    }
     return (
         <Layout title='Shop Page' description="Search and find books of your choice" className="container-fluid">
 
             <div className="row">
+
                 <div className="col-4">
+
                     <h4>Filter by categories</h4>
                     <ul>
-                        <Checkbox categories={categories} handleFilters={filters => handleFilters(filters, 'category')} />
+                        <Checkbox
+                            categories={categories}
+                            handleFilters={filters =>
+                                handleFilters(filters, 'category')}
+                        />
                     </ul>
+
+
+                    <h4>Filter by price</h4>
+                    <RadioBox
+                        prices={prices}
+                        handleFilters={filters =>
+                            handleFilters(filters, 'price')}
+                    />
+
                 </div>
+
                 <div className="col-8">
                     {JSON.stringify(myFilters)}
                 </div>
+
             </div>
 
         </Layout>
