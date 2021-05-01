@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Layout from './Layout'
 import { getProducts } from './apiCore';
+import Card from './Card';
 
 const Home = () => {
 
@@ -10,18 +11,18 @@ const Home = () => {
 
     const loadProductsBySell = () => {
         getProducts('sold').then(data => {
-            if(data.error){
+            if (data.error) {
                 setError(true)
-            }else{
+            } else {
                 setProductsBySell(data);
             }
         })
     }
     const loadProductsByArrival = () => {
         getProducts('createdAt').then(data => {
-            if(data.error){
+            if (data.error) {
                 setError(true)
-            }else{
+            } else {
                 setProductsByArrival(data);
             }
         })
@@ -31,14 +32,22 @@ const Home = () => {
     useEffect(() => {
         loadProductsByArrival()
         loadProductsBySell()
-        
+
     }, [])
 
     return (
-        <Layout title='Home Page' description="Node React E-Commerce App">
-            {JSON.stringify(productsBySell)}
-            <hr/>
-            {JSON.stringify(productsByArrival)}
+        <Layout title='Home Page' description="Node React E-Commerce App" className="container-fluid">
+
+            <h2 className="mb-4">New Arrivals</h2>
+            <div className="row">
+                {productsByArrival.map((product, i) => (<Card key={i} product={product} />))}
+            </div>
+
+            <h2 className="mb-4">Best Seller</h2>
+            <div className="row">
+                {productsBySell.map((product, i) => (<Card key={i} product={product} />))}
+            </div>
+
         </Layout>
     )
 }
