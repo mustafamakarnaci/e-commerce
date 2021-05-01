@@ -20,6 +20,11 @@ const Menu = ({ history }) => {
                         Home
                     </Link>
                 </li>
+                <li className="nav-item">
+                    <Link to='/shop' className="nav-link" style={isActive(history, '/shop')}>
+                        Shop
+                    </Link>
+                </li>
 
 
 
