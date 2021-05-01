@@ -23,7 +23,7 @@ exports.read = (req, res) => {
 
 // update
 exports.update = (req, res) => {
-    console.log(req);
+    //console.log(req);
 
     const category = req.category
     category.name = req.body.name
@@ -41,7 +41,7 @@ exports.update = (req, res) => {
 // remove
 exports.remove = (req, res) => {
 
-    console.log(req);
+    //console.log(req);
 
     const category = req.category
 

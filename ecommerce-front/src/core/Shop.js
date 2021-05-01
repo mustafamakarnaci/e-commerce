@@ -3,10 +3,13 @@ import Layout from './Layout'
 import Card from './Card';
 import { getCategories } from './apiCore';
 import Checkbox from './Checkbox'
-
+import { prices } from './fixesPrices'
 
 const Shop = () => {
 
+    const [myFilters, setMyFilters] = useState({
+        filters: { category: [], price: [] }
+    })
     const [categories, setCategories] = useState([])
     const [error, setError] = useState(false);
 
@@ -25,7 +28,10 @@ const Shop = () => {
     }, [])
 
     const handleFilters = (filters, filterBy) => {
-        console.log('shop', filters, filterBy);
+        
+        const newFilters = { ...myFilters }
+        newFilters.filters[filterBy] = filters
+        setMyFilters(newFilters)
     }
 
     return (
@@ -39,7 +45,7 @@ const Shop = () => {
                     </ul>
                 </div>
                 <div className="col-8">
-                    right
+                    {JSON.stringify(myFilters)}
                 </div>
             </div>
 

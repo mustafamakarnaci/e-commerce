@@ -73,7 +73,7 @@ exports.update = (req, res) => {
                 });
             }
 
-            console.log(files.photo);
+            //console.log(files.photo);
 
             product.photo.data = fs.readFileSync(files.photo.path)
             product.photo.contentType = files.photo.type
@@ -123,7 +123,7 @@ exports.create = (req, res) => {
                 });
             }
 
-            console.log(files.photo);
+            //console.log(files.photo);
 
             product.photo.data = fs.readFileSync(files.photo.path)
             product.photo.contentType = files.photo.type
