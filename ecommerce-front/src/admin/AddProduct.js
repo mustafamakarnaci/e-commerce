@@ -148,11 +148,7 @@ const AddProduct = () => {
             <button className="btn btn-primary">Create Product</button>
         </form>
     )
-    /* {showError()}
-    {showSuccess()}
-    {newPostForm()}
-    {goBack()} */
-
+   
     const showError = () => (
         <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
             {error}
