@@ -5,7 +5,7 @@ import { API } from '../config';
  * getProducts fetch
  */
 
- export const getProducts = (sortBy) => {
+export const getProducts = (sortBy) => {
     return fetch(`${API}/products?sortBy=${sortBy}&order=desc&limit=6`, {
         method: 'GET'
     })
@@ -19,7 +19,7 @@ import { API } from '../config';
  * getCategories fetch
  */
 
- export const getCategories = () => {
+export const getCategories = () => {
     return fetch(`${API}/categories`, {
         method: 'GET'
     })
@@ -27,4 +27,29 @@ import { API } from '../config';
             return response.json()
         })
         .catch(err => console.log(err));
+}
+
+
+/**
+* getFilteredProducts fetch
+*/
+export const getFilteredProducts = (skip, limit, filters = {}) => {
+
+    const data = {
+        limit, skip, filters
+    }
+    return fetch(`${API}/products/by/search`, {
+        method: "POST",
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => {
+            console.log(err)
+        })
 }
