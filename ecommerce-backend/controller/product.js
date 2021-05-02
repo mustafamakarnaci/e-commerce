@@ -286,9 +286,9 @@ exports.photo = (req, res, next) => {
 
 exports.listSearch = (req, res) => {
     //create query object to hold search value and category value
-    const quert = {}
+    const query = {}
     // assign search value to query.name
-    if (req.query.seach) {
+    if (req.query.search) {
         query.name = { $regex: req.query.search, $options: 'i' }
         //assing category value to query.category
         if (req.query.category && req.query.category != 'All') {
@@ -302,9 +302,9 @@ exports.listSearch = (req, res) => {
                 return res.status(400).json({
                     error: errorHandler(err)
                 })
-            } else {
-                res.json(products)
             }
+            res.json(products)
+
         }).select('-photo')
     }
 }

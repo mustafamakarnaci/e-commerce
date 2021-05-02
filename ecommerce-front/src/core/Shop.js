@@ -49,7 +49,7 @@ const Shop = () => {
             if (data.error) {
                 setError(data.error)
             } else {
-                setFilteredResults([...filteredResults,...data.data]);
+                setFilteredResults([...filteredResults, ...data.data]);
                 setSize(data.size);
                 setSkip(toSkip);
             }
@@ -57,7 +57,7 @@ const Shop = () => {
 
     }
 
-    const loadMoreButton = () =>{
+    const loadMoreButton = () => {
         return (
             size > 0 && size >= limit && (
                 <button onClick={loadMore} className="btn btn-warning mb-5">
@@ -128,10 +128,12 @@ const Shop = () => {
                     <h2 className="mb-4">Products</h2>
                     <div className="row">
                         {filteredResults.map((product, i) => (
-                            <Card key={i} product={product} />
+                            <div className="col-4 mb-3">
+                                <Card key={i} product={product} />
+                            </div>
                         ))}
                     </div>
-                    <hr/>
+                    <hr />
                     {loadMoreButton()}
                 </div>
             </div>

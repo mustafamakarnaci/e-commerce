@@ -27,7 +27,7 @@ export const getCategories = () => {
             return response.json()
         })
         .catch(err => console.log(err));
-}
+};
 
 
 /**
@@ -52,7 +52,7 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
         .catch(err => {
             console.log(err)
         })
-}
+};
 
 
 
@@ -70,4 +70,20 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
             return response.json()
         })
         .catch(err => console.log(err));
-}
+};
+
+
+
+/**
+ * getCategories fetch
+ */
+
+ export const read = (productId) => {
+    return fetch(`${API}/product/${productId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err));
+};

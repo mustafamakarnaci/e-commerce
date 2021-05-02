@@ -8,7 +8,7 @@ const Search = () => {
     const [data, setData] = useState({
         categories: [],
         category: '',
-        search: '',
+        search: "",
         results: [],
         searched: false
     })
@@ -24,31 +24,30 @@ const Search = () => {
 
 
     const loadCategories = () => {
-        getCategories()
-            .then(data => {
-                if (data.error) {
-                    console.log(data.error)
-                } else {
-                    setData({ ...data, categories: data })
-                }
-            })
+        getCategories().then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                setData({ ...data, categories: data })
+            }
+        })
     }
 
 
     useEffect(() => {
         loadCategories();
-    }, [])
+    }, []);
 
     const searchData = () => {
         console.log(search, category);
         if (search) {
-            list({ search: search || undefined, category: category })
-                .then(response => {
+            list({ search: search || undefined, category: category }).then(
+                response => {
                     if (response.error) {
                         console.log(response.error)
                     } else {
-                        console.log('res', response)
                         setData({ ...data, results: response, searched: true })
+                        console.log('res', results)
                     }
                 })
         }
@@ -66,13 +65,30 @@ const Search = () => {
 
     }
 
+    const searchMessage = (searched, results) => {
+        if (searched && results.length > 0) {
+            return `Found ${results.length} products`
+        }
+        if (searched && results.length < 1) {
+            return `No products found!`
+        }
+
+    }
+
     const searchedProducts = (results = []) => {
         console.log('r', results)
         return (
-            <div className="row">
-                { results.map((product, i) => {
-                    <Card key={i} product={product} />
-                })}
+            <div>
+                <h2 className="mt-4 mb-4">
+                    {searchMessage(searched, results)}
+                </h2>
+                <div className="row">
+                    {results.map((product, i) => (
+
+                        <Card key={i} product={product} />
+
+                    ))}
+                </div>
             </div>
         )
     }
@@ -87,7 +103,7 @@ const Search = () => {
                             className="btn mr-2"
                             onChange={handleChange("category")}
                         >
-                            <option value="All">Pick Category</option>
+                            <option value="All">All</option>
                             {categories.map((c, i) => (
                                 <option key={i} value={c._id}>
                                     {c.name}
@@ -95,15 +111,18 @@ const Search = () => {
                             ))}
                         </select>
                     </div>
-                    <input type="search"
-                        onChange={handleChange('search')}
+                    <input
+                        type="search"
+                        onChange={handleChange("search")}
                         placeholder="Search by name"
                         className="form-control"
 
                     />
 
                 </div>
-                <div className="btn input-group-append" style={{ border: 'none' }}>
+                <div
+                    className="btn input-group-append"
+                    style={{ border: 'none' }}>
                     <button className="input-group-text">
                         Search
                             </button>
