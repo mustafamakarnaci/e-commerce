@@ -60,9 +60,9 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
  * getProducts fetch
  */
 
- export const list = params => {
-     const query = queryString.stringify(params);
-     console.log(query)
+export const list = params => {
+    const query = queryString.stringify(params);
+    console.log(query)
     return fetch(`${API}/products/search?${query}`, {
         method: 'GET'
     })
@@ -73,13 +73,27 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
 };
 
 
-
 /**
- * getCategories fetch
+ * read fetch
  */
 
- export const read = (productId) => {
+export const read = (productId) => {
     return fetch(`${API}/product/${productId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err));
+};
+
+
+/**
+ * listRelated fetch
+ */
+
+export const listRelated = (productId) => {
+    return fetch(`${API}/products/related/${productId}`, {
         method: 'GET'
     })
         .then(response => {
