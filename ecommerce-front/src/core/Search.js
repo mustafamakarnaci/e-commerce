@@ -76,7 +76,6 @@ const Search = () => {
     }
 
     const searchedProducts = (results = []) => {
-        console.log('r', results)
         return (
             <div>
                 <h2 className="mt-4 mb-4">
