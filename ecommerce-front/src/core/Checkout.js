@@ -21,19 +21,23 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
     const userId = isAuthenticated() && isAuthenticated().user._id;
     const token = isAuthenticated() && isAuthenticated().token;
 
+
     const getToken = (userId, token) => {
-        getBraintreeClientToken(userId, token).then(response => {
+        getBraintreeClientToken(userId, token).then(data => {
             if (data.error) {
-                setData({ ...data, error: response.error });
+                console.log(data.error);
+                setData({ ...data, error: data.error });
             } else {
-                setData({ clientToken: response.clientToken });
+                console.log(data);
+                setData({ clientToken: data.clientToken });
             }
         });
     };
-
+ 
     useEffect(() => {
         getToken(userId, token);
-    }, [data.address]);
+    }, []);
+
 
     const getTotal = () => {
         return products.reduce((currentValue, nextValue) => {
